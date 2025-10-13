@@ -56,6 +56,13 @@ class DeviceInfolist
                                 ->schema([
                                     TextEntry::make('last_active_at')->label('最后活跃时间'),
                                     TextEntry::make('registered_at')->label('注册时间'),
+                                    IconEntry::make('profile.is_network_tethered')->label('网络连接')->boolean(),
+                                    TextEntry::make('profile.battery_level')->label('电量'),
+                                    TextEntry::make('profile.device_capacity')->label('容量'),
+                                    TextEntry::make('profile.available_device_capacity')->label('可用容量'),
+                                    TextEntry::make('profile.os_version')->label('系统版本'),
+                                    TextEntry::make('profile.wifi_mac')->label('wifi mac'),
+                                    TextEntry::make('profile.bluetooth_mac')->label('bluetooth mac'),
                                 ])
                         ])
                     ]),

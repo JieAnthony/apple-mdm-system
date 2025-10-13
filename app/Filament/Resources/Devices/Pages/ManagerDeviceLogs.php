@@ -15,6 +15,7 @@ class ManagerDeviceLogs extends ManageRelatedRecords
 
     protected static string $relationship = 'logs';
 
+    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-circle-stack';
 
     public static function getNavigationLabel(): string
     {
@@ -54,6 +55,7 @@ class ManagerDeviceLogs extends ManageRelatedRecords
                     }),
                 TextColumn::make('created_at')->label('记录时间'),
                 TextColumn::make('response_at')->label('响应时间'),
+                TextColumn::make('command_uuid')->label('UUID'),
             ])
             ->filters([
                 //

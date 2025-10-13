@@ -4,7 +4,9 @@ namespace App\Filament\Resources\Devices\Pages;
 
 use App\Filament\Resources\Devices\DeviceResource;
 use Filament\Actions\Action;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -13,6 +15,7 @@ class ViewDevice extends ViewRecord
     protected static string $resource = DeviceResource::class;
 
     protected static ?string $navigationLabel = '设备';
+
 
     public function getTitle(): string|Htmlable
     {
@@ -38,12 +41,50 @@ class ViewDevice extends ViewRecord
                 })
                 ->successNotificationTitle('指令已下发1122334'),
 
+            Action::make('test6')
+                ->label('功能限制')
+                ->color('warning')
+                ->slideOver()
+                ->modalHeading('功能限制')
+                ->schema([
+                    CheckboxList::make('technologies')
+                        ->options(range(1, 100))
+                        ->columns(4)
+                        ->default([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+                ])
+                ->action(function (Action $action, array $data) {
+                    try {
+                        /* Perform your specific action */
+                        $action->successNotificationTitle('Process queued successfully.');
+                        $action->success(); // Trigger success notification
+                    } catch (\Exception $e) {
+                        $action->failureNotificationTitle('Process failed with error: ' . $e->getMessage());
+                        $action->failure(); // Trigger failure notification
+                    }
+                }),
+
             Action::make('test1')
                 ->hidden($record->lost_mode)
                 ->label('启用丢失')
-                ->color('warning')
-                ->button()
-                ->modalDescription('启用丢失模式后设备将被锁定，请确认是否要启用？')
+                ->color('danger')
+                ->schema([
+                    TextInput::make('body')
+                        ->required()
+                        ->minLength(1)
+                        ->maxLength(50)
+                        ->label('内容'),
+                    TextInput::make('phone_number')
+                        ->required()
+                        ->minLength(1)
+                        ->maxLength(50)
+                        ->label('联系方式'),
+                    TextInput::make('note')
+                        ->required()
+                        ->minLength(1)
+                        ->maxLength(50)
+                        ->label('备注'),
+                ])
+                ->modalDescription("启用丢失模式后设备将被锁定，请确认是否要启用？")
                 ->requiresConfirmation()
                 ->action(function () {
                 })
@@ -93,7 +134,7 @@ class ViewDevice extends ViewRecord
                         ->placeholder('请输入plist内容，格式为XML，UUID请自己生成')
                         ->required(),
                 ])
-                ->action(function (Action $action,array $data) {
+                ->action(function (Action $action, array $data) {
                     try {
                         /* Perform your specific action */
                         $action->successNotificationTitle('Process queued successfully.');
@@ -102,7 +143,7 @@ class ViewDevice extends ViewRecord
                         $action->failureNotificationTitle('Process failed with error: ' . $e->getMessage());
                         $action->failure(); // Trigger failure notification
                     }
-                })
+                }),
         ];
     }
 }

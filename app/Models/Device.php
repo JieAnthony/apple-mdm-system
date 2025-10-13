@@ -56,4 +56,9 @@ class Device extends Model
     {
         return $this->hasMany(DeviceDepProfile::class,'device_id','id');
     }
+
+    public function profile()
+    {
+        return $this->hasOne(DeviceProfile::class,'device_id','id');
+    }
 }

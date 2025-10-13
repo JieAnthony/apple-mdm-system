@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Devices\Pages;
 
-use App\Enums\DeviceLogStateEnum;
 use App\Filament\Resources\Devices\DeviceResource;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Columns\TextColumn;
@@ -14,6 +13,8 @@ class ManagerDeviceInstalledApplications extends ManageRelatedRecords
     protected static string $resource = DeviceResource::class;
 
     protected static string $relationship = 'installedApplications';
+
+    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-squares-2x2';
 
 
     public static function getNavigationLabel(): string
