@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Filament\Resources\Devices\Pages;
+
+use App\Enums\DeviceLogStateEnum;
+use App\Filament\Resources\Devices\DeviceResource;
+use Filament\Resources\Pages\ManageRelatedRecords;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
+
+class ManagerDeviceLogs extends ManageRelatedRecords
+{
+    protected static string $resource = DeviceResource::class;
+
+    protected static string $relationship = 'logs';
+
+
+    public static function getNavigationLabel(): string
+    {
+        return '日志';
+    }
+
+    public function getTitle(): string|Htmlable
+    {
+        /** @var \App\Models\Device */
+        $record = $this->getRecord();
+
+        return $record->serial_number . ' - 日志';
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->defaultSort('id','desc')
+            ->columns([
+                TextColumn::make('id')->label('日志ID'),
+                TextColumn::make('content')->label('内容')->wrap(),
+                TextColumn::make('state')
+                    ->label('状态')
+                    ->formatStateUsing(function (DeviceLogStateEnum $state){
+                        return match ($state){
+                            DeviceLogStateEnum::ACKNOWLEDGED => '已确认',
+                            DeviceLogStateEnum::ERROR => '失败',
+                            default => '处理中'
+                        };
+                    })
+                    ->color(function (DeviceLogStateEnum $state){
+                        return match ($state){
+                            DeviceLogStateEnum::ACKNOWLEDGED => 'success',
+                            DeviceLogStateEnum::ERROR => 'danger',
+                            default => 'primary'
+                        };
+                    }),
+                TextColumn::make('created_at')->label('记录时间'),
+                TextColumn::make('response_at')->label('响应时间'),
+            ])
+            ->filters([
+                //
+            ]);
+
+    }
+}

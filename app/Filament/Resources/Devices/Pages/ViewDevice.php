@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Filament\Resources\Devices\Pages;
+
+use App\Filament\Resources\Devices\DeviceResource;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
+use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Contracts\Support\Htmlable;
+
+class ViewDevice extends ViewRecord
+{
+    protected static string $resource = DeviceResource::class;
+
+    protected static ?string $navigationLabel = '设备';
+
+    public function getTitle(): string|Htmlable
+    {
+        /** @var \App\Models\Device */
+        $record = $this->getRecord();
+
+        return $record->serial_number;
+    }
+
+    protected function getActions(): array
+    {
+        /** @var \App\Models\Device */
+        $record = $this->getRecord();
+
+        return [
+            Action::make('test')
+                ->label('设备信息')
+                ->color('info')
+                ->button()
+                ->modalHeading('获取设备信息')
+                ->requiresConfirmation()
+                ->action(function () {
+                })
+                ->successNotificationTitle('指令已下发1122334'),
+
+            Action::make('test1')
+                ->hidden($record->lost_mode)
+                ->label('启用丢失')
+                ->color('warning')
+                ->button()
+                ->modalDescription('启用丢失模式后设备将被锁定，请确认是否要启用？')
+                ->requiresConfirmation()
+                ->action(function () {
+                })
+                ->successNotificationTitle('指令已下发1122334'),
+
+            Action::make('test2')
+                ->hidden(!$record->lost_mode)
+                ->label('解除丢失')
+                ->color('success')
+                ->button()
+                ->requiresConfirmation()
+                ->action(function () {
+                })
+                ->successNotificationTitle('指令已下发1122334'),
+
+            Action::make('test3')
+                ->hidden(!$record->activation_lock)
+                ->label('关闭激活锁')
+                ->color('danger')
+                ->button()
+                ->modalDescription('关闭激活锁是一个危险行为且不可逆，确认要这样操作吗？')
+                ->requiresConfirmation()
+                ->action(function () {
+                })
+                ->successNotificationTitle('指令已下发1122334'),
+
+            Action::make('test4')
+                ->hidden($record->activation_lock)
+                ->label('开启激活锁')
+                ->color('success')
+                ->button()
+                ->requiresConfirmation()
+                ->action(function () {
+                })
+                ->successNotificationTitle('指令已下发1122334'),
+
+            Action::make('test5')
+                ->label('自定义指令')
+                ->color('gray')
+                ->slideOver()
+                ->modalHeading('发送自定义指令')
+                ->schema([
+                    Textarea::make('plist')
+                        ->rows(10)
+                        ->cols(20)
+                        ->label('plist')
+                        ->placeholder('请输入plist内容，格式为XML，UUID请自己生成')
+                        ->required(),
+                ])
+                ->action(function (Action $action,array $data) {
+                    try {
+                        /* Perform your specific action */
+                        $action->successNotificationTitle('Process queued successfully.');
+                        $action->success(); // Trigger success notification
+                    } catch (\Exception $e) {
+                        $action->failureNotificationTitle('Process failed with error: ' . $e->getMessage());
+                        $action->failure(); // Trigger failure notification
+                    }
+                })
+        ];
+    }
+}
