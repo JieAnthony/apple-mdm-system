@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\DEP;
 use App\Services\MDM;
+use App\Services\Plist;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
             $mdmConfig = $app['config']->get('mdm');
 
             return new MDM($mdmConfig['host'], $mdmConfig['username'], $mdmConfig['password']);
+        });
+
+        $this->app->singleton('plist', function () {
+            return new Plist;
         });
     }
 }

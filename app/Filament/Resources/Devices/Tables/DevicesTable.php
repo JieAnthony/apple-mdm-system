@@ -37,11 +37,25 @@ class DevicesTable
             ])
             ->filters([
 
+                Filter::make('id')
+                    ->schema([
+                        TextInput::make('value')
+                            ->numeric()
+                            ->label('ID'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query->when($data['value'], function ($q, $value) {
+                            $q->where('id', (int) $value);
+                        });
+                    })
+                    ->indicateUsing(function (array $data): ?string {
+                        return $data['value'] ? "ID：{$data['value']}" : null;
+                    }),
+
                 Filter::make('serial_number')
                     ->schema([
                         TextInput::make('value')
-                            ->label('序列号')
-                            ->placeholder('输入序列号关键字'),
+                            ->label('序列号'),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query->when($data['value'], function ($q, $value) {
@@ -55,8 +69,7 @@ class DevicesTable
                 Filter::make('name')
                     ->schema([
                         TextInput::make('value')
-                            ->label('设备名')
-                            ->placeholder('输入设备名关键字'),
+                            ->label('设备名'),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query->when($data['value'], function ($q, $value) {

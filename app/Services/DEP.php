@@ -61,7 +61,7 @@ class DEP
     {
         return $this->send('PUT', \sprintf('/v1/tokens/%s', $this->depName), [
             RequestOptions::QUERY => [
-                'force' => (int)$isForce,
+                'force' => (int) $isForce,
             ],
         ]);
     }
@@ -80,7 +80,7 @@ class DEP
     {
         return $this->send('PUT', \sprintf('/v1/tokenpki/%s', $this->depName), [
             RequestOptions::QUERY => [
-                'force' => (int)$isForce,
+                'force' => (int) $isForce,
             ],
             RequestOptions::BODY => $body,
         ]);
