@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('device_bypass_codes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('device_id')->index();
-            $table->char('code',31);
-            $table->char('hash',64);
-            $table->char('key',32);
+            $table->char('code', 31);
+            $table->char('hash', 64);
+            $table->char('key', 32);
             $table->timestamps();
             $table->softDeletes();
         });

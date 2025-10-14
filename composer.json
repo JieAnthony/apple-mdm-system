@@ -7,19 +7,26 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "ext-json": "*",
         "filament/filament": "^4.0",
-        "laravel-lang/common": "^6.7",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "proget-hq/apple-activation-lock": "^0.2.0",
+        "rodneyrehm/plist": "^2.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "*",
         "fakerphp/faker": "^1.23",
+        "laravel-lang/common": "^6.7",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "overtrue/laravel-query-logger": "^3.1",
+        "pestphp/pest": "^3.7",
+        "pestphp/pest-plugin-faker": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.1"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +41,8 @@
         }
     },
     "scripts": {
+        "cs-fix": "./vendor/bin/pint",
+        "n-f": "php artisan ide-helper:eloquent && php artisan ide-helper:generate && php artisan ide-helper:meta && php artisan ide-helper:models --reset --write && ./vendor/bin/pint",
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",

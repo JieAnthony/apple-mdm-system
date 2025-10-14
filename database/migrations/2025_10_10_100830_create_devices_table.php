@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->string('serial_number',50)->unique();
-            $table->string('udid',100);
+            $table->string('serial_number', 50)->unique();
+            $table->string('udid', 100)->unique();
             $table->string('name');
             $table->boolean('in_abm')->unsigned();
             $table->boolean('supervision')->unsigned();

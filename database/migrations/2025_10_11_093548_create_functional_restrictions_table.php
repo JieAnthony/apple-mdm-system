@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('key', 100)->unique();
-            $table->boolean('value')->unsigned();
+            $table->boolean('default_value')->unsigned();
             $table->timestamps();
         });
     }

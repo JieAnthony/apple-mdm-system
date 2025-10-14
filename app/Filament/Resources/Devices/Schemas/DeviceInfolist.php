@@ -22,16 +22,24 @@ class DeviceInfolist
                             Grid::make(3)
                                 ->schema([
                                     TextEntry::make('name')->label('设备'),
-                                    TextEntry::make('serial_number')->label('序列号'),
-                                    TextEntry::make('udid')->label('UDID'),
-                                ])
-                        ])
+                                    TextEntry::make('serial_number')
+                                        ->copyable()
+                                        ->copyMessage('序列号已复制')
+                                        ->copyMessageDuration(1500)
+                                        ->label('序列号'),
+                                    TextEntry::make('udid')
+                                        ->copyable()
+                                        ->copyMessage('UDID已复制')
+                                        ->copyMessageDuration(1500)
+                                        ->label('UDID'),
+                                ]),
+                        ]),
                     ]),
                 Section::make()
                     ->columnSpanFull()
                     ->schema([
                         Flex::make([
-                            Grid::make(4)
+                            Grid::make(5)
                                 ->schema([
                                     IconEntry::make('in_abm')
                                         ->label('ABM')
@@ -45,8 +53,11 @@ class DeviceInfolist
                                     IconEntry::make('lost_mode')
                                         ->label('丢失模式')
                                         ->boolean(),
-                                ])
-                        ])
+                                    IconEntry::make('profile.is_network_tethered')
+                                        ->label('网络连接')
+                                        ->boolean(),
+                                ]),
+                        ]),
                     ]),
                 Section::make()
                     ->columnSpanFull()
@@ -54,17 +65,14 @@ class DeviceInfolist
                         Flex::make([
                             Grid::make(3)
                                 ->schema([
+                                    TextEntry::make('profile.os_version')->label('系统版本'),
                                     TextEntry::make('last_active_at')->label('最后活跃时间'),
                                     TextEntry::make('registered_at')->label('注册时间'),
-                                    IconEntry::make('profile.is_network_tethered')->label('网络连接')->boolean(),
                                     TextEntry::make('profile.battery_level')->label('电量'),
                                     TextEntry::make('profile.device_capacity')->label('容量'),
                                     TextEntry::make('profile.available_device_capacity')->label('可用容量'),
-                                    TextEntry::make('profile.os_version')->label('系统版本'),
-                                    TextEntry::make('profile.wifi_mac')->label('wifi mac'),
-                                    TextEntry::make('profile.bluetooth_mac')->label('bluetooth mac'),
-                                ])
-                        ])
+                                ]),
+                        ]),
                     ]),
             ]);
     }

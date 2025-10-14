@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('device_functional_restrictions', function (Blueprint $table) {
+        Schema::create('device_has_functional_restrictions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('device_id');
-            $table->string('name');
-            $table->string('key', 100);
+            $table->unsignedBigInteger('functional_restriction_id');
             $table->boolean('value')->unsigned();
-            $table->timestamps();
-            $table->unique(['device_id','key']);
+            $table->unique(['device_id', 'functional_restriction_id'], 'device_id_functional_restriction_id_unique');
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('device_functional_restrictions');
+        Schema::dropIfExists('device_has_functional_restrictions');
     }
 };

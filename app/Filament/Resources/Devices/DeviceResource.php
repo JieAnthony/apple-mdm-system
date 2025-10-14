@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Devices;
 
-
 use App\Filament\Resources\Devices\Pages\ListDevices;
 use App\Filament\Resources\Devices\Pages\ManagerDeviceInstalledApplications;
 use App\Filament\Resources\Devices\Pages\ManagerDeviceLogs;
@@ -22,7 +21,7 @@ class DeviceResource extends Resource
 {
     protected static ?string $model = Device::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::DeviceTablet;
 
     protected static ?string $recordTitleAttribute = 'device';
 
@@ -73,5 +72,4 @@ class DeviceResource extends Resource
             ManagerDeviceInstalledApplications::class,
         ]);
     }
-
 }

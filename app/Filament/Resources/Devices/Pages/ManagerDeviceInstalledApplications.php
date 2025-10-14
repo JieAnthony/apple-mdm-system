@@ -7,6 +7,7 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 
 class ManagerDeviceInstalledApplications extends ManageRelatedRecords
 {
@@ -16,8 +17,20 @@ class ManagerDeviceInstalledApplications extends ManageRelatedRecords
 
     protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-squares-2x2';
 
+    public function getRecordTitle(): string|Htmlable
+    {
+        /** @var \App\Models\Device */
+        $record = $this->getRecord();
+
+        return $record->serial_number;
+    }
 
     public static function getNavigationLabel(): string
+    {
+        return 'Apps';
+    }
+
+    public static function getRelationshipTitle(): string
     {
         return 'Apps';
     }
@@ -27,13 +40,16 @@ class ManagerDeviceInstalledApplications extends ManageRelatedRecords
         /** @var \App\Models\Device */
         $record = $this->getRecord();
 
-        return $record->serial_number . ' - Apps';
+        return $record->serial_number.' - Apps';
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->defaultSort('id','desc')
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->select(['id', 'device_id', 'identifier', 'name', 'version'])
+                    ->orderByDesc('id');
+            })
             ->paginated(false)
             ->columns([
                 TextColumn::make('identifier')->label('Identifier'),
