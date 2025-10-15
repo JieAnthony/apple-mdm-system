@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $device_assigned_at
- * @property \Illuminate\Support\Carbon|null $profile_assigned_at
- * @property \Illuminate\Support\Carbon|null $profile_pushed_at
  * @property-read \App\Models\Device|null $device
  *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile newModelQuery()
@@ -24,8 +22,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereDeviceAssignedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereDeviceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereProfileAssignedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereProfilePushedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceDepProfile whereUuid($value)
  *

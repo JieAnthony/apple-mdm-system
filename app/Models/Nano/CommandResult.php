@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Kernel;
+namespace App\Models\Nano;
 
 use Illuminate\Database\Eloquent\Model;
 

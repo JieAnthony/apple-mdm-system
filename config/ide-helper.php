@@ -155,9 +155,10 @@ return [
     */
 
     'ignored_models' => [
-        \App\Models\Kernel\Command::class,
-        \App\Models\Kernel\CommandResult::class,
-        \App\Models\Kernel\Device::class,
+        \App\Models\Nano\Command::class,
+        \App\Models\Nano\CommandResult::class,
+        \App\Models\Nano\Device::class,
+        \App\Models\Nano\PushCert::class,
     ],
 
     /*

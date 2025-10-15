@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class DepProfileInitCommand extends Command
+class DepCreateProfileCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dep:profile-init';
+    protected $signature = 'dep:create-profile';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '初始化DEP的配置文件';
+    protected $description = '创建DEP的配置文件';
 
     /**
      * Execute the console command.

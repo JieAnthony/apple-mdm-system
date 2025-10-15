@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('assigned_by_abm_account', 100)->nullable();
             $table->timestamps();
             $table->timestamp('device_assigned_at')->nullable();
-            $table->timestamp('profile_assigned_at')->nullable();
-            $table->timestamp('profile_pushed_at')->nullable();
         });
     }
 

@@ -9,11 +9,12 @@ use App\Events\DeviceJoinedEvent;
 use App\Exceptions\BusinessException;
 use App\Models\Device;
 use App\Models\DeviceBypassCode;
+use App\Models\DeviceDepProfile;
 use App\Models\DeviceInstalledApplication;
 use App\Models\DeviceProfile;
 use App\Models\FunctionalRestriction;
-use App\Models\Kernel\Command;
-use App\Models\Kernel\PushCert;
+use App\Models\Nano\Command;
+use App\Models\Nano\PushCert;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Carbon;
@@ -73,6 +74,27 @@ class DeviceService
         }
 
         throw new BusinessException('操作太快请重试！');
+    }
+
+    public function assignDepProfile(Device $device)
+    {
+        // 分配
+        app('dep')->assignProfile(config('dep.profile_uuid'), [$device->serial_number]);
+
+        $result = app('dep')->deviceDetail([$device->serial_number]);
+
+        if (! isset($result['devices'][$device->serial_number]) || $result['devices'][$device->serial_number]['response_status'] !== 'SUCCESS') {
+            throw new BusinessException('当前设备无法成功访问，请联系管理员');
+        }
+
+        $deviceDepDetail = $result['devices'][$device->serial_number];
+        // 新增一条记录
+        DeviceDepProfile::create([
+            'device_id' => $device->id,
+            'uuid' => $deviceDepDetail['profile_uuid'],
+            'assigned_by_abm_account' => $deviceDepDetail['device_assigned_by'],
+            'device_assigned_at' => Carbon::parse($deviceDepDetail['device_assigned_date'])->tz(config('app.timezone')),
+        ]);
     }
 
     public function authenticate(string $rawPayload, Carbon $responseAt)

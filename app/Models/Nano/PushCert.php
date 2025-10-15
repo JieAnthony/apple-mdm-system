@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Kernel;
+namespace App\Models\Nano;
 
 use Illuminate\Database\Eloquent\Model;
 
 class PushCert extends Model
 {
-    protected $connection = 'mdm';
+    protected $connection = 'nano';
 
     protected $table = 'push_certs';
 
