@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Devices\Pages;
 
 use App\Filament\Resources\Devices\DeviceResource;
+use App\Services\DeviceService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\ListRecords;
@@ -25,8 +26,15 @@ class ListDevices extends ListRecords
                         ->required()
                         ->label('序列号'),
                 ])
-                ->action(function () {})
-                ->successNotificationTitle('指令已下发1122334'),
+                ->action(function (Action $action, array $data) {
+                    try {
+                        app(DeviceService::class)->store($data['serial_number']);
+                    } catch (\Exception $exception) {
+                        $action->failureNotificationTitle($exception->getMessage());
+                        $action->failure();
+                    }
+                })
+                ->successNotificationTitle('添加设备成功'),
         ];
     }
 }

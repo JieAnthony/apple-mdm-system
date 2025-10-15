@@ -27,4 +27,22 @@ class DeviceLogService
 
         return $deviceLog;
     }
+
+    public function getLogByDeviceAndCommandUUID(Device $device, string $commandUUID)
+    {
+        return DeviceLog::query()
+            ->select(['id', 'device_id', 'command_uuid', 'state'])
+            ->where('device_id', $device->id)
+            ->where('command_uuid', $commandUUID)
+            ->first();
+    }
+
+    public function operation(DeviceLog $deviceLog, DeviceLogStateEnum $deviceLogStateEnum, Carbon $responseAt)
+    {
+        $deviceLog->state = $deviceLogStateEnum;
+        $deviceLog->response_at = $responseAt;
+        $deviceLog->save();
+
+        return $deviceLog;
+    }
 }

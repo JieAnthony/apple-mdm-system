@@ -110,7 +110,7 @@ class Device extends Model
             FunctionalRestriction::class,
             DeviceHasFunctionalRestriction::class,
             'device_id',
-            'functional_restrictions_id',
+            'functional_restriction_id',
             'id',
             'id'
         )->withPivot('value');
