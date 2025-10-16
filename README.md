@@ -99,6 +99,15 @@ APPLE_APNS_TOPIC=APNs推送证书的Topic
 APPLE_ORG_NAME=组织或公司名称
 APPLE_GUID=负责人邮箱
 ```
+nanodep和nanomam数据库配置
+```dotenv
+NANO_DB_HOST=
+NANO_DB_PORT=
+NANO_DB_DATABASE=
+NANO_DB_USERNAME=
+NANO_DB_PASSWORD=
+```
+
 ***
 
 3️⃣ 初始化数据库
