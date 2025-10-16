@@ -71,11 +71,11 @@ php artisan key:generate
 <br>
 DEP 配置（设备注册）
 ```dotenv
-DEP_HOST=#DEP服务地址，可以是内网地址
-DEP_USERNAME=#DEP接口用户名
-DEP_PASSWORD=#DEP接口密码
-DEP_NAME=#ABM中创建的MDM服务器名称
-DEP_PROFILE_UUID=#使用 php artisan dep:create-profile 创建后回填
+DEP_HOST=DEP服务地址，可以是内网地址
+DEP_USERNAME=DEP接口用户名
+DEP_PASSWORD=DEP接口密码
+DEP_NAME=ABM中创建的MDM服务器名称
+DEP_PROFILE_UUID=使用 php artisan dep:create-profile 创建后回填
 ```
 
 MDM 配置（设备管理）
