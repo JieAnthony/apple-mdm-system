@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Devices\Pages;
 
 use App\Filament\Resources\Devices\DeviceResource;
+use App\Services\DeviceService;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -57,5 +59,29 @@ class ManagerDeviceInstalledApplications extends ManageRelatedRecords
                 TextColumn::make('version')->label('版本'),
             ]);
 
+    }
+
+    protected function getActions(): array
+    {
+        /** @var $record \App\Models\Device */
+        $record = $this->getRecord();
+
+        return [
+            Action::make('information')
+                ->label('获取')
+                ->color('info')
+                ->button()
+                ->requiresConfirmation()
+                ->modalHeading('获取设备已安装的APP列表')
+                ->action(function (Action $action) use ($record) {
+                    try {
+                        app(DeviceService::class)->getInstalledApplicationList($record);
+                    } catch (\Exception $exception) {
+                        $action->failureNotificationTitle($exception->getMessage());
+                        $action->failure();
+                    }
+                })
+                ->successNotificationTitle('指令已下发'),
+        ];
     }
 }

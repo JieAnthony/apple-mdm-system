@@ -54,7 +54,7 @@ class DeviceService
                     $device->lost_mode = false;
                 }
 
-                $device->name = sprintf('%s %s %s', $result['model'], $result['color'], $result['description']);
+                $device->name = sprintf('%s(%s)(%s)', $result['model'], $result['color'], $result['description']);
                 $device->in_abm = true;
                 $device->save();
 
@@ -190,7 +190,7 @@ class DeviceService
         if ($logContent) {
             app(DeviceLogService::class)->record(
                 $device,
-                \sprintf('下发指令：%s', $logContent),
+                \sprintf('发送指令：%s', $logContent),
                 $result['command_uuid'],
             );
         }
@@ -222,6 +222,15 @@ class DeviceService
             $device,
             app('plist')->disableLostModePlist(),
             '禁用丢失模式'
+        );
+    }
+
+    public function getInstalledApplicationList(Device $device)
+    {
+        $this->sendMDMCommand(
+            $device,
+            app('plist')->installedApplicationListPlist(),
+            '获取设备已安装的APP列表'
         );
     }
 

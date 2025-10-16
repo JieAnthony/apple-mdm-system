@@ -42,7 +42,6 @@
     },
     "scripts": {
         "cs-fix": "./vendor/bin/pint",
-        "n-f": "php artisan ide-helper:eloquent && php artisan ide-helper:generate && php artisan ide-helper:meta && php artisan ide-helper:models --reset --write && ./vendor/bin/pint",
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",

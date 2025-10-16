@@ -250,4 +250,9 @@ class Plist
 
         return $plist->toXML();
     }
+
+    public function installedApplicationListPlist()
+    {
+        return $this->generatePlist(new CFDictionary, 'InstalledApplicationList');
+    }
 }
