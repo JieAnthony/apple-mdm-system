@@ -442,9 +442,7 @@ class DeviceService
 
     public function enrollment(string $message)
     {
-        $deviceInfo = $this->parseAppleAspenDeviceInfoMessage(
-            \str_replace([' '], '+', $message)
-        );
+        $deviceInfo = $this->parseAppleAspenDeviceInfoMessage($message);
 
         $lock = Cache::lock('device_enrollment:'.$deviceInfo['Serial']);
         if ($lock->get()) {
@@ -489,6 +487,7 @@ class DeviceService
 
     public function parseAppleAspenDeviceInfoMessage(string $message)
     {
+        $message = \str_replace([' '], '+', $message);
         $plistMatch = '/<plist[^>]*?>[\s\S]*?<\/plist>/mi';
         $cmsEnvelope = \base64_decode($message);
         preg_match_all($plistMatch, $cmsEnvelope, $plistData, PREG_SET_ORDER);
