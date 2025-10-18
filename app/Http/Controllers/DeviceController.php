@@ -9,15 +9,15 @@ class DeviceController extends Controller
 {
     public function enrollmentPage(Request $request, DeviceService $deviceService)
     {
-        $message = $request->get('message');
-        if (! $message) {
-            return view('enrollment-error', ['message' => 'message参数不存在']);
+        $content = $request->header('x-apple-aspen-deviceinfo');
+        if (! $content) {
+            return view('enrollment-error', ['message' => 'x-apple-aspen-deviceinfo参数有误']);
         }
 
         try {
-            $deviceInfo = $deviceService->parseAppleAspenDeviceInfoMessage($request->get('message'));
+            $deviceInfo = $deviceService->parseAppleAspenDeviceInfo($content);
 
-            return view('enrollment', $deviceInfo);
+            return view('enrollment', array_merge($deviceInfo, ['content' => $content]));
         } catch (\Exception $exception) {
             return view('enrollment-error', ['message' => $exception->getMessage()]);
         }
@@ -25,13 +25,13 @@ class DeviceController extends Controller
 
     public function enrollment(Request $request, DeviceService $deviceService)
     {
-        $message = $request->get('message');
-        if (! $message) {
-            return response()->json(['message' => 'message 不存在'], 500);
+        $content = $request->get('content');
+        if (! $content) {
+            return response()->json(['message' => 'content 不存在'], 500);
         }
 
         try {
-            $file = $deviceService->enrollment($message);
+            $file = $deviceService->enrollment($content);
 
             return response()->download(
                 $file,

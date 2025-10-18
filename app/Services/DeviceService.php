@@ -440,9 +440,9 @@ class DeviceService
         $this->sendMDMCommand($device, $plist, '自定义指令:'.$requestType);
     }
 
-    public function enrollment(string $message)
+    public function enrollment(string $content)
     {
-        $deviceInfo = $this->parseAppleAspenDeviceInfoMessage($message);
+        $deviceInfo = $this->parseAppleAspenDeviceInfo($content);
 
         $lock = Cache::lock('device_enrollment:'.$deviceInfo['Serial']);
         if ($lock->get()) {
@@ -485,11 +485,11 @@ class DeviceService
         throw new BusinessException('请重试！');
     }
 
-    public function parseAppleAspenDeviceInfoMessage(string $message)
+    public function parseAppleAspenDeviceInfo(string $content)
     {
-        $message = \str_replace([' '], '+', $message);
+        $content = \str_replace([' '], '+', $content);
         $plistMatch = '/<plist[^>]*?>[\s\S]*?<\/plist>/mi';
-        $cmsEnvelope = \base64_decode($message);
+        $cmsEnvelope = \base64_decode($content);
         preg_match_all($plistMatch, $cmsEnvelope, $plistData, PREG_SET_ORDER);
         $plist = app('plist')->parse($plistData[0][0]);
 

@@ -75,12 +75,6 @@
 <script src="{{asset('js/jquery-3.7.1.min.js')}}"></script>
 
 <script>
-    // 从 URL 获取参数
-    function getParam(name) {
-        const url = new URL(window.location.href);
-        return url.searchParams.get(name);
-    }
-
     function downloadBlob(blob, filename) {
         const link = document.createElement('a');
         const url = window.URL.createObjectURL(blob);
@@ -93,9 +87,6 @@
     }
 
     $(function () {
-
-        const message = getParam('message') || '';
-
         $('#registerBtn').on('click', function () {
             const btn = $(this);
             btn.prop('disabled', true).text('注册中...');
@@ -104,7 +95,7 @@
                 url: '/enrollment',
                 method: 'POST',
                 data: {
-                    message: message,
+                    content: '{{ $content }}',
                     '_token': '{{ csrf_token() }}'
                 },
                 success: function (data, status, xhr) {
