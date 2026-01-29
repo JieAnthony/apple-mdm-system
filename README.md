@@ -132,8 +132,6 @@ php artisan make:filament-user
 
 ***
 
-***
-
 ## 💬讨论
 
 ![1](./images/qrcode_1769682091007.jpg)
