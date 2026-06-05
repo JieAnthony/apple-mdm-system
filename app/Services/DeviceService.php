@@ -623,7 +623,7 @@ class DeviceService
 
     public function MDMCallbackHandleByInstalledApplicationList(Device $device, array $params)
     {
-        if (! empty($plist['InstalledApplicationList'])) {
+        if (! empty($params['InstalledApplicationList'])) {
             $hasIds = [];
             foreach ($params['InstalledApplicationList'] as $installedApplication) {
                 if (! empty($installedApplication['Identifier']) && ! empty($installedApplication['Name'])) {
